@@ -176,9 +176,11 @@ public class VisitorDataContext implements DataContext {
         }
       default:
         //TODO: Support few more supported cases
-        LOGGER.info(type.getSqlTypeName() + " is not handled for "
-            + value.getClass() + " for checking implication");
-        return Pair.of(index, value);
+        if (value instanceof NlsString) {
+          return Pair.of(index, ((NlsString) value).getValue());
+        } else {
+          return Pair.of(index, value);
+        }
       }
     }
 
