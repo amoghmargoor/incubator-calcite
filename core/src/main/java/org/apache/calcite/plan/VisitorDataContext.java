@@ -32,16 +32,20 @@ import org.apache.calcite.sql.SqlOperator;
 import org.apache.calcite.sql.fun.SqlCastFunction;
 import org.apache.calcite.util.NlsString;
 import org.apache.calcite.util.Pair;
+import org.apache.calcite.util.trace.CalciteTrace;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * DataContext for evaluating an RexExpression
  */
 public class VisitorDataContext implements DataContext {
+  private static final Logger LOGGER = CalciteTrace.getPlannerTracer();
+
   private final Object[] values;
 
   public VisitorDataContext(Object[] values) {
@@ -94,6 +98,8 @@ public class VisitorDataContext implements DataContext {
     for (Pair<RexInputRef, RexNode> elem: usgList) {
       Pair<Integer, ? extends Object> value = getValue(elem.getKey(), elem.getValue());
       if (value == null) {
+        LOGGER.info(elem.getKey()+" is not handled for "+elem.getValue() +
+            " for checking implication");
         return null;
       }
       int index = value.getKey();
@@ -170,6 +176,9 @@ public class VisitorDataContext implements DataContext {
         }
       default:
         //TODO: Support few more supported cases
+        LOGGER.info(type.getSqlTypeName() + " is not handled for " +
+            value.getClass() +
+            " for checking implication");
         return Pair.of(index, value);
       }
     }
