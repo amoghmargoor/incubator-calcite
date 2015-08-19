@@ -98,8 +98,8 @@ public class VisitorDataContext implements DataContext {
     for (Pair<RexInputRef, RexNode> elem: usgList) {
       Pair<Integer, ? extends Object> value = getValue(elem.getKey(), elem.getValue());
       if (value == null) {
-        LOGGER.info(elem.getKey()+" is not handled for "+elem.getValue() +
-            " for checking implication");
+        LOGGER.info(elem.getKey() + " is not handled for " + elem.getValue()
+            + " for checking implication");
         return null;
       }
       int index = value.getKey();
@@ -176,9 +176,8 @@ public class VisitorDataContext implements DataContext {
         }
       default:
         //TODO: Support few more supported cases
-        LOGGER.info(type.getSqlTypeName() + " is not handled for " +
-            value.getClass() +
-            " for checking implication");
+        LOGGER.info(type.getSqlTypeName() + " is not handled for "
+            + value.getClass() + " for checking implication");
         return Pair.of(index, value);
       }
     }
