@@ -32,7 +32,7 @@ import org.apache.calcite.sql.SqlOperator;
 import org.apache.calcite.sql.fun.SqlCastFunction;
 import org.apache.calcite.util.NlsString;
 import org.apache.calcite.util.Pair;
-import org.apache.calcite.util.trace.CalciteTrace;
+import org.apache.calcite.util.trace.CalciteLogger;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -44,7 +44,8 @@ import java.util.logging.Logger;
  * DataContext for evaluating an RexExpression
  */
 public class VisitorDataContext implements DataContext {
-  private static final Logger LOGGER = CalciteTrace.getPlannerTracer();
+  private static final CalciteLogger LOGGER =
+      new CalciteLogger(Logger.getLogger(VisitorDataContext.class.getName()));
 
   private final Object[] values;
 
@@ -98,7 +99,7 @@ public class VisitorDataContext implements DataContext {
     for (Pair<RexInputRef, RexNode> elem: usgList) {
       Pair<Integer, ? extends Object> value = getValue(elem.getKey(), elem.getValue());
       if (value == null) {
-        LOGGER.info(elem.getKey() + " is not handled for " + elem.getValue()
+        LOGGER.warning(elem.getKey() + " is not handled for " + elem.getValue()
             + " for checking implication");
         return null;
       }
@@ -117,6 +118,11 @@ public class VisitorDataContext implements DataContext {
       Integer index = ((RexInputRef) inputRef).getIndex();
       Object value = ((RexLiteral) literal).getValue();
       final RelDataType type = inputRef.getType();
+
+      if (type.getSqlTypeName() == null) {
+        LOGGER.warning(inputRef.toString() + " returned null SqlTypeName");
+        return null;
+      }
 
       switch (type.getSqlTypeName()) {
       case INTEGER:
@@ -176,6 +182,8 @@ public class VisitorDataContext implements DataContext {
         }
       default:
         //TODO: Support few more supported cases
+        LOGGER.warning(type.getSqlTypeName() + " for value of class " + value.getClass()
+            + " is being handled in default way");
         if (value instanceof NlsString) {
           return Pair.of(index, ((NlsString) value).getValue());
         } else {
