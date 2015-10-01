@@ -808,6 +808,8 @@ public class Lattice {
         return SqlStdOperatorTable.COUNT;
       } else if (aggName.equalsIgnoreCase("sum")) {
         return SqlStdOperatorTable.SUM;
+      } else if (aggName.equalsIgnoreCase("avg")) {
+        return SqlStdOperatorTable.AVG;
       } else {
         throw new RuntimeException("Unknown lattice aggregate function "
             + aggName);
