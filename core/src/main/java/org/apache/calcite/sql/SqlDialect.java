@@ -237,6 +237,8 @@ public class SqlDialect {
       return DatabaseProduct.H2;
     } else if (upperProductName.contains("VERTICA")) {
       return DatabaseProduct.VERTICA;
+    } else if (upperProductName.contains("REDSHIFT")) {
+      return DatabaseProduct.POSTGRESQL;
     } else {
       return DatabaseProduct.UNKNOWN;
     }
