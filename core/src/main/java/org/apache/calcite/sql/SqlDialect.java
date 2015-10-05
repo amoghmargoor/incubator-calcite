@@ -186,7 +186,7 @@ public class SqlDialect {
     } else if (upperProductName.contains("VERTICA")) {
       return DatabaseProduct.VERTICA;
     } else if (upperProductName.contains("REDSHIFT")) {
-      return DatabaseProduct.REDSHIFT;
+      return DatabaseProduct.POSTGRESQL;
     } else {
       return DatabaseProduct.UNKNOWN;
     }
@@ -505,7 +505,6 @@ public class SqlDialect {
     VERTICA("Vertica", "\""),
     SQLSTREAM("SQLstream", "\""),
     PARACCEL("Paraccel", "\""),
-    REDSHIFT("RedShift", "\""),
     /**
      * Placeholder for the unknown database.
      *
