@@ -364,7 +364,7 @@ public class SqlDialect {
 
   // -- behaviors --
   protected boolean requiresAliasForFromItems() {
-    return (getDatabaseProduct() == DatabaseProduct.POSTGRESQL);
+    return getDatabaseProduct() == DatabaseProduct.POSTGRESQL;
   }
 
   /**
