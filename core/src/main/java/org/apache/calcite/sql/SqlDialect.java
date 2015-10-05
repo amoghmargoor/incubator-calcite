@@ -185,6 +185,8 @@ public class SqlDialect {
       return DatabaseProduct.H2;
     } else if (upperProductName.contains("VERTICA")) {
       return DatabaseProduct.VERTICA;
+    } else if (upperProductName.contains("REDSHIFT")) {
+      return DatabaseProduct.REDSHIFT;
     } else {
       return DatabaseProduct.UNKNOWN;
     }
@@ -362,7 +364,7 @@ public class SqlDialect {
 
   // -- behaviors --
   protected boolean requiresAliasForFromItems() {
-    return getDatabaseProduct() == DatabaseProduct.POSTGRESQL;
+    return (getDatabaseProduct() == DatabaseProduct.POSTGRESQL);
   }
 
   /**
@@ -503,6 +505,7 @@ public class SqlDialect {
     VERTICA("Vertica", "\""),
     SQLSTREAM("SQLstream", "\""),
     PARACCEL("Paraccel", "\""),
+    REDSHIFT("RedShift", "\""),
     /**
      * Placeholder for the unknown database.
      *
