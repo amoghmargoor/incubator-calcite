@@ -486,6 +486,8 @@ public class SqlDialect {
     case MYSQL:
     case HIVE:
     case REDSHIFT:
+    case H2:
+    case UNKNOWN:
       return false;
     default:
       return true;
@@ -614,7 +616,7 @@ public class SqlDialect {
      * do something database-specific like quoting identifiers, don't rely
      * on this dialect to do what you want.
      */
-    UNKNOWN("Unknown", "`", NullCollation.HIGH);
+    UNKNOWN("Unknown", "", NullCollation.HIGH);
 
     private SqlDialect dialect = null;
     private String databaseProductName;
