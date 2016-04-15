@@ -16,21 +16,13 @@
  */
 package org.apache.calcite.sql.fun;
 
-import org.apache.calcite.rel.type.RelDataType;
-import org.apache.calcite.rel.type.RelDataTypeFactory;
 import org.apache.calcite.sql.SqlFunction;
 import org.apache.calcite.sql.SqlFunctionCategory;
 import org.apache.calcite.sql.SqlKind;
-import org.apache.calcite.sql.SqlOperatorBinding;
-import org.apache.calcite.sql.SqlSpecialOperator;
 import org.apache.calcite.sql.type.OperandTypes;
 import org.apache.calcite.sql.type.ReturnTypes;
-import org.apache.calcite.sql.type.SqlReturnTypeInference;
-import org.apache.calcite.sql.type.SqlTypeTransforms;
+import org.apache.calcite.sql.type.SqlTypeFamily;
 import org.apache.calcite.sql.util.ReflectiveSqlOperatorTable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Operator table that contains only Hive-specific functions and operators.
@@ -43,10 +35,30 @@ public class HiveSqlOperatorTable extends ReflectiveSqlOperatorTable {
    */
   private static HiveSqlOperatorTable instance;
 
-  /** Internal operator that extracts time periods (year, month, date) from a
-   * date in internal format (number of days since epoch). */
-  public static final SqlSpecialOperator HIVE_TO_DATE =
-      new SqlSpecialOperator("TO_DATE", SqlKind.OTHER);
+  /** Hive built-in method to convert timestamp string
+   * into date strings */
+  public static final SqlFunction HIVE_TO_DATE =
+      new SqlFunction("TO_DATE", SqlKind.OTHER,
+          ReturnTypes.ARG0_FORCE_NULLABLE, null,
+          OperandTypes.STRING, SqlFunctionCategory.TIMEDATE);
+
+  public static final SqlFunction HIVE_UNIX_TIMESTAMP =
+      new SqlFunction("UNIX_TIMESTAMP", SqlKind.OTHER,
+          ReturnTypes.BIGINT, null, OperandTypes.NILADIC,
+          SqlFunctionCategory.TIMEDATE);
+
+  public static final SqlFunction HIVE_FROM_UNIXTIME =
+      new SqlFunction("FROM_UNIXTIME", SqlKind.OTHER,
+          ReturnTypes.VARCHAR_2000, null, OperandTypes.NUMERIC,
+          SqlFunctionCategory.TIMEDATE);
+
+  public static final SqlFunction HIVE_DATE_SUB =
+      new SqlFunction("DATE_SUB", SqlKind.OTHER,
+          ReturnTypes.ARG0_NULLABLE, null,
+          OperandTypes.family(SqlTypeFamily.STRING,
+              SqlTypeFamily.INTEGER),
+          SqlFunctionCategory.TIMEDATE);
+
   /**
    * Returns the Hive operator table, creating it if necessary.
    */
@@ -62,4 +74,4 @@ public class HiveSqlOperatorTable extends ReflectiveSqlOperatorTable {
   }
 }
 
-// End OracleSqlOperatorTable.java
+// End HiveSqlOperatorTable.java

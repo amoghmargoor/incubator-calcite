@@ -265,6 +265,15 @@ public class RexImpTable {
     defineMethod(HiveSqlOperatorTable.HIVE_TO_DATE,
         Types.lookupMethod(HiveQlFunctions.class, "toDate", String.class),
         NullPolicy.STRICT);
+    defineMethod(HiveSqlOperatorTable.HIVE_UNIX_TIMESTAMP,
+        Types.lookupMethod(HiveQlFunctions.class, "unixTimeStamp"),
+        NullPolicy.STRICT);
+    defineMethod(HiveSqlOperatorTable.HIVE_FROM_UNIXTIME,
+        Types.lookupMethod(HiveQlFunctions.class, "fromUnixTime", Long.class),
+        NullPolicy.STRICT);
+    defineMethod(HiveSqlOperatorTable.HIVE_DATE_SUB,
+        Types.lookupMethod(HiveQlFunctions.class, "fromUnixTime", Long.class),
+        NullPolicy.STRICT);
 
     map.put(IS_NULL, new IsXxxImplementor(null, false));
     map.put(IS_NOT_NULL, new IsXxxImplementor(null, true));
