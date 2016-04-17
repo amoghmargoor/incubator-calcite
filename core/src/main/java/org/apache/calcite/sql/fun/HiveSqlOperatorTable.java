@@ -38,23 +38,23 @@ public class HiveSqlOperatorTable extends ReflectiveSqlOperatorTable {
   /** Hive built-in method to convert timestamp string
    * into date strings */
   public static final SqlFunction HIVE_TO_DATE =
-      new SqlFunction("TO_DATE", SqlKind.OTHER,
-          ReturnTypes.ARG0_FORCE_NULLABLE, null,
+      new SqlFunction("TO_DATE", SqlKind.HIVE_OP,
+          ReturnTypes.VARCHAR_2000, null,
           OperandTypes.STRING, SqlFunctionCategory.TIMEDATE);
 
   public static final SqlFunction HIVE_UNIX_TIMESTAMP =
-      new SqlFunction("UNIX_TIMESTAMP", SqlKind.OTHER,
+      new SqlFunction("UNIX_TIMESTAMP", SqlKind.HIVE_OP,
           ReturnTypes.BIGINT, null, OperandTypes.NILADIC,
           SqlFunctionCategory.TIMEDATE);
 
   public static final SqlFunction HIVE_FROM_UNIXTIME =
-      new SqlFunction("FROM_UNIXTIME", SqlKind.OTHER,
+      new SqlFunction("FROM_UNIXTIME", SqlKind.HIVE_OP,
           ReturnTypes.VARCHAR_2000, null, OperandTypes.NUMERIC,
           SqlFunctionCategory.TIMEDATE);
 
   public static final SqlFunction HIVE_DATE_SUB =
-      new SqlFunction("DATE_SUB", SqlKind.OTHER,
-          ReturnTypes.ARG0_NULLABLE, null,
+      new SqlFunction("DATE_SUB", SqlKind.HIVE_OP,
+          ReturnTypes.VARCHAR_2000, null,
           OperandTypes.family(SqlTypeFamily.STRING,
               SqlTypeFamily.INTEGER),
           SqlFunctionCategory.TIMEDATE);

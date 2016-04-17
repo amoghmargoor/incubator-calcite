@@ -272,7 +272,7 @@ public class RexImpTable {
         Types.lookupMethod(HiveQlFunctions.class, "fromUnixTime", Long.class),
         NullPolicy.STRICT);
     defineMethod(HiveSqlOperatorTable.HIVE_DATE_SUB,
-        Types.lookupMethod(HiveQlFunctions.class, "fromUnixTime", Long.class),
+        Types.lookupMethod(HiveQlFunctions.class, "dateSub", String.class, Integer.class),
         NullPolicy.STRICT);
 
     map.put(IS_NULL, new IsXxxImplementor(null, false));

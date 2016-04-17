@@ -56,7 +56,7 @@ public class HiveQlFunctions {
     Date date = new Date(millis);
     return sdf.format(date);
   }
-  public static String dateSub(String timeStamp, int toBeSubed) {
+  public static String dateSub(String timeStamp, Integer toBeSubed) {
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     try {
